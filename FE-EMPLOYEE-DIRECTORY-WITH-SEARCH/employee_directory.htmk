@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Directory with Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 { color: #333; }
+    input {
+      padding: 10px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      padding: 10px 15px;
+      margin-left: 8px;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { background: #0056b3; }
+    table {
+      width: 60%;
+      margin: 30px auto;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+    }
+    th {
+      background: #007bff;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Employee Directory with Search</h1>
+
+  <input type="text" id="searchInput" placeholder="Enter name or department...">
+  <button onclick="searchEmployee()">Search</button>
+
+  <table id="resultTable">
+    <thead>
+      <tr>
+        <th>Employee ID</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Designation</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const employees = [
+      { emp_id: "E101", name: "Bala", department: "CSE", designation: "Developer" },
+      { emp_id: "E102", name: "Mathan", department: "IT", designation: "Analyst" },
+      { emp_id: "E103", name: "Kavin", department: "ECE", designation: "Designer" },
+      { emp_id: "E104", name: "Arun", department: "MECH", designation: "Tester" }
+    ];
+
+    function searchEmployee() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const results = employees.filter(emp =>
+        emp.name.toLowerCase().includes(query) || emp.department.toLowerCase().includes(query)
+      );
+
+      const tbody = document.querySelector('#resultTable tbody');
+      tbody.innerHTML = '';
+
+      if (results.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4">No matching employee found.</td></tr>`;
+      } else {
+        results.forEach(emp => {
+          const row = `<tr>
+            <td>${emp.emp_id}</td>
+            <td>${emp.name}</td>
+            <td>${emp.department}</td>
+            <td>${emp.designation}</td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
+      }
+    }
+  </script>
+</body>
+</html>
